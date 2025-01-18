@@ -27,6 +27,7 @@
         "vue": "^3.4.0"
     },
     "dependencies": {
-        "naive-ui": "^2.41.0"
+        "naive-ui": "^2.41.0",
+        "vue3-openlayers": "^11.3.0"
     }
 }

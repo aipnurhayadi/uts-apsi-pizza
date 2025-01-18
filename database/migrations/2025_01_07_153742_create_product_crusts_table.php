@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('product_crusts', function (Blueprint $table) {
             $table->id();
-            $table->string('code');
             $table->string('name');
             $table->text('description');
             $table->string('additional_price');
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->unsignedBigInteger('deleted_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

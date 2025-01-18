@@ -6,7 +6,7 @@ use App\RelatedUserAndTimestamp;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class OrderType extends Model
+class Address extends Model
 {
     use SoftDeletes, RelatedUserAndTimestamp;
 
@@ -18,4 +18,14 @@ class OrderType extends Model
         'deleted_by',
         'deleted_at'
     ];
+
+    public function deliveryTime()
+    {
+        return $this->belongsTo(DeliveryTime::class);
+    }
+
+    public function outlet()
+    {
+        return $this->belongsTo(Outlet::class);
+    }
 }

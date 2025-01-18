@@ -17,6 +17,9 @@ return new class extends Migration
             $table->text('location');
             $table->string('lat');
             $table->string('long');
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->unsignedBigInteger('deleted_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

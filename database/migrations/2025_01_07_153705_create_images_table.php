@@ -17,6 +17,9 @@ return new class extends Migration
             $table->string('type')->nullable();
             $table->unsignedBigInteger('imageable_id');
             $table->string('imageable_type');
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->unsignedBigInteger('deleted_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

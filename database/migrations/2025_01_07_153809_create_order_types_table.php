@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('order_types', function (Blueprint $table) {
             $table->id();
-            $table->string('code');
             $table->string('name');
             $table->text('description');
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->unsignedBigInteger('deleted_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

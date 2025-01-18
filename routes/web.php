@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\BrandStoryController;
 use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\HomeController;
@@ -21,8 +22,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware('auth')->prefix('delivery')->group(function () {
-    Route::get('/address', [DeliveryController::class, 'address'])->name('delivery.address');
+Route::middleware('auth')->group(function () {
+    Route::get('/addresses', [AddressController::class, 'edit'])->name('addresses.edit');
+    Route::put('/addresses', [AddressController::class, 'update'])->name('addresses.update');
 });
 
 require __DIR__ . '/auth.php';
