@@ -17,7 +17,7 @@ class AddressController extends Controller
         $deliveryTimes = DeliveryTime::all();
         $outlets = Outlet::all();
 
-        return Inertia::render('Addresses/Edit', [
+        return Inertia::render('Address/Edit', [
             'address' => $address,
             'deliveryTimes' => $deliveryTimes,
             'outlets' => $outlets
@@ -26,19 +26,27 @@ class AddressController extends Controller
 
     public function update(Request $request, Address $address)
     {
-        $request->validate([
-            'location' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
-            'delivery_time_id' => 'required|exists:delivery_times,id',
-            'outlet_id' => 'required|exists:outlets,id',
-        ]);
+        try {
 
-        if (!$address) {
-            $address = new Address();
+            $request->validate([
+                'location' => 'required|string|max:255',
+                'description' => 'required|string|max:255',
+                'delivery_time_id' => 'required|exists:delivery_times,id',
+                'outlet_id' => 'required|exists:outlets,id',
+            ]);
+
+            $userId = Auth::id();
+            $request->merge(['user_id' => $userId]);
+
+            if (!$address->exists) {
+                $address = new Address();
+                $address->create($request->all());
+            } else {
+                $address->update($request->all());
+            }
+            return redirect()->route('shop.index');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['errorMessage' => $e->getMessage()]);
         }
-
-        $address->update($request->all());
-
-        return redirect()->route('profile.edit');
     }
 }

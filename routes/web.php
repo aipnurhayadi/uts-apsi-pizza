@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\PartyController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ShopController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -23,8 +24,10 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/addresses', [AddressController::class, 'edit'])->name('addresses.edit');
-    Route::put('/addresses', [AddressController::class, 'update'])->name('addresses.update');
+    Route::get('/address', [AddressController::class, 'edit'])->name('address.edit');
+    Route::put('/address', [AddressController::class, 'update'])->name('address.update');
+
+    Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
 });
 
 require __DIR__ . '/auth.php';

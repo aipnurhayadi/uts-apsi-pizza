@@ -11,6 +11,11 @@ class Address extends Model
     use SoftDeletes, RelatedUserAndTimestamp;
 
     protected $fillable = [
+        'user_id',
+        'location',
+        'description',
+        'delivery_time_id',
+        'outlet_id',
         'created_by',
         'created_at',
         'updated_by',
