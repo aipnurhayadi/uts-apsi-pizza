@@ -43,7 +43,7 @@ watch(productTabActive, () => {
                     >
                         <n-gi :span="8">
                             <div class="mb-5">
-                                <Link :href="route('address.edit')">
+                                <Link :href="route('order.index')">
                                     <n-button
                                         strong
                                         secondary

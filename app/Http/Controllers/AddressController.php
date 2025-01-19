@@ -34,9 +34,7 @@ class AddressController extends Controller
                 'delivery_time_id' => 'required|exists:delivery_times,id',
                 'outlet_id' => 'required|exists:outlets,id',
             ]);
-
-            $userId = Auth::id();
-            $request->merge(['user_id' => $userId]);
+            $request->merge(['user_id' => Auth::id()]);
 
             if (!$address->exists) {
                 $address = new Address();
@@ -44,9 +42,9 @@ class AddressController extends Controller
             } else {
                 $address->update($request->all());
             }
-            return redirect()->route('shop.index');
+            return redirect()->route('order.index');
         } catch (\Exception $e) {
-            return redirect()->back()->withErrors(['errorMessage' => $e->getMessage()]);
+            return redirect()->back()->withErrors(['summary' => $e->getMessage()]);
         }
     }
 }

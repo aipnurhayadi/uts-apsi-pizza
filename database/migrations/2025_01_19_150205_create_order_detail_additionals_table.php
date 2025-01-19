@@ -11,15 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('order_types', function (Blueprint $table) {
+        Schema::create('order_detail_additionals', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->text('description');
+            $table->unsignedBigInteger('order_detail_id');
+            $table->unsignedBigInteger('order_detail_additionable_id');
+            $table->string('order_detail_additionable_type');
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->unsignedBigInteger('deleted_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('order_detail_id')->references('id')->on('order_details')->onDelete('cascade');
         });
     }
 
@@ -28,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('order_types');
+        Schema::dropIfExists('order_detail_additionals');
     }
 };

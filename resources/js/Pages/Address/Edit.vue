@@ -64,7 +64,7 @@ const handleValidateButtonClick = () => {
                 onPositiveClick: () => {
                     router.put(route('address.update'), form, {
                         onError: (errors) => {
-                            message.error(errors.errorMessage);
+                            message.error(errors.summary);
                         },
                     });
                 },

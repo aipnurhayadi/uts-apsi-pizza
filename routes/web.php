@@ -5,9 +5,11 @@ use App\Http\Controllers\BrandStoryController;
 use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PartyController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ShopController;
+use App\Http\Middleware\CheckUserHasAddress;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -27,7 +29,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/address', [AddressController::class, 'edit'])->name('address.edit');
     Route::put('/address', [AddressController::class, 'update'])->name('address.update');
 
-    Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
+    Route::middleware(CheckUserHasAddress::class)->group(function () {
+        Route::get('/order', [OrderController::class, 'index'])->name('order.index');
+        Route::get('/order/{order}', [OrderController::class, 'show'])->name('order.show');
+        Route::get('/order/{order}/cart', [OrderController::class, 'cart'])->name('order.show.cart');
+        Route::get('/order/{order}/add/{product}', [OrderController::class, 'add'])->name('order.show.add');
+        Route::post('/order/{order}/add/{product}', [OrderController::class, 'doadd'])->name('order.show.doadd');
+    });
 });
 
 require __DIR__ . '/auth.php';

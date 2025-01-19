@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Image;
 use App\Models\Product;
+use App\Models\ProductCrust;
 use App\Models\ProductSize;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -93,9 +94,15 @@ class ProductSeeder extends Seeder
         ];
 
         $sizes = [
-            ['name' => 'Personal', 'additional_price' => 10000],
+            ['name' => 'Personal', 'additional_price' => 0],
             ['name' => 'Regular', 'additional_price' => 25000],
             ['name' => 'Large', 'additional_price' => 35000],
+        ];
+
+        $crusts = [
+            ['name' => 'Original', 'additional_price' => 10000],
+            ['name' => 'Sausage', 'additional_price' => 10000],
+            ['name' => 'Cheese', 'additional_price' => 10000],
         ];
 
         $images = [
@@ -115,14 +122,27 @@ class ProductSeeder extends Seeder
 
         foreach ($products as $index => $productData) {
             $product = Product::create($productData);
-            foreach ($sizes as $size) {
-                ProductSize::create([
-                    'product_id' => $product->id,
-                    'name' => $size['name'],
-                    'description' => "Ukuran {$size['name']} untuk {$product->name}",
-                    'additional_price' => $size['additional_price'],
-                ]);
+
+            if ($product->category == 'pizza') {
+                foreach ($sizes as $size) {
+                    ProductSize::create([
+                        'product_id' => $product->id,
+                        'name' => $size['name'],
+                        'description' => "Ukuran {$size['name']} untuk {$product->name}",
+                        'additional_price' => $size['additional_price'],
+                    ]);
+                }
+
+                foreach ($crusts as $crust) {
+                    ProductCrust::create([
+                        'product_id' => $product->id,
+                        'name' => $crust['name'],
+                        'description' => "Tambahan {$crust['name']} untuk {$product->name}",
+                        'additional_price' => $crust['additional_price'],
+                    ]);
+                }
             }
+
 
             Image::create([
                 'path' => "public/products/{$images[$index]}.png",

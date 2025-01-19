@@ -16,7 +16,7 @@ return new class extends Migration
             $table->enum('category', ['snack_drink', 'pizza', 'pasta_rice']);
             $table->string('name');
             $table->text('description');
-            $table->decimal('price');
+            $table->integer('price');
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->unsignedBigInteger('deleted_by')->nullable();

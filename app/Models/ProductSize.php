@@ -18,4 +18,9 @@ class ProductSize extends Model
         'deleted_by',
         'deleted_at'
     ];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }
