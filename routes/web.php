@@ -29,10 +29,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/address', [AddressController::class, 'edit'])->name('address.edit');
     Route::put('/address', [AddressController::class, 'update'])->name('address.update');
 
+    Route::get('/order/transaction', [OrderController::class, 'transaction'])->name('order.transaction');
+
     Route::middleware(CheckUserHasAddress::class)->group(function () {
         Route::get('/order', [OrderController::class, 'index'])->name('order.index');
         Route::get('/order/{order}', [OrderController::class, 'show'])->name('order.show');
         Route::get('/order/{order}/cart', [OrderController::class, 'cart'])->name('order.show.cart');
+        Route::post('/order/{order}/cart', [OrderController::class, 'docart'])->name('order.show.docart');
         Route::get('/order/{order}/add/{product}', [OrderController::class, 'add'])->name('order.show.add');
         Route::post('/order/{order}/add/{product}', [OrderController::class, 'doadd'])->name('order.show.doadd');
     });

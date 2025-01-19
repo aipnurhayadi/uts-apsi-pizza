@@ -6,6 +6,7 @@ use App\Models\Address;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\OrderDetailAdditional;
+use App\Models\PaymentMethod;
 use App\Models\Product;
 use App\Models\ProductCrust;
 use App\Models\ProductSize;
@@ -106,6 +107,50 @@ class OrderController extends Controller
 
     public function cart(Request $request, Order $order)
     {
-        return Inertia::render('Order/Cart', ['order' => $order]);
+        $order->load([
+            'orderDetails.product.images',
+            'orderDetails.orderDetailAdditionals.orderDetailAdditionable'
+        ]);
+
+        // address
+        $address = Address::where('user_id', Auth::user()->id)->with(['outlet', 'deliveryTime'])->orderBy('id', 'desc')->first();
+
+        // payment method
+        $paymentMethods = PaymentMethod::get();
+
+        return Inertia::render('Order/Cart', ['order' => $order, 'address' => $address, 'paymentMethods' => $paymentMethods]);
+    }
+
+    public function docart(Request $request, Order $order)
+    {
+        // $validated = $request->validate([
+        //     'payment_method_id' => 'required|string|max:255|exists:payment_methods,id',
+        // ]);
+
+        // $payment_method_id = $validated['payment_method_id'];
+
+        $payment_method_id = $request->input('payment_method_id');
+        try {
+            $order->payment_method_id = $payment_method_id;
+            $order->order_status = 'onprogress';
+            $order->save();
+
+            return Redirect::route('order.transaction');
+        } catch (Exception $e) {
+            return redirect()->back()->withErrors(['summary' => $e->getMessage()]);
+        }
+    }
+
+    public function transaction(): Response
+    {
+        $orders = Order::where('user_id', Auth::user()->id)
+            ->with([
+                'orderDetails.product.images',
+                'orderDetails.orderDetailAdditionals.orderDetailAdditionable'
+            ])
+            ->whereIn('order_status', ['onprogress', 'completed'])
+            ->orderBy('id', 'desc')->get();
+
+        return Inertia::render('Order/Transaction', ['orders' => $orders]);
     }
 }

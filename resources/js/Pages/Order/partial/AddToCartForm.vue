@@ -23,7 +23,7 @@ const props = defineProps({
     },
 });
 
-console.log(props.product, props.order)
+console.log(props.product, props.order);
 
 const form = useForm({
     crust_id: null,
@@ -70,14 +70,18 @@ const handleValidateButtonClick = () => {
                 negativeText: 'Not Sure',
                 draggable: true,
                 onPositiveClick: () => {
-                    router.post(route('order.show.doadd', {
-                        product: props.product.id,
-                        order: props.order.id
-                    }), form, {
-                        onError: (errors) => {
-                            message.error(errors.summary);
+                    router.post(
+                        route('order.show.doadd', {
+                            product: props.product.id,
+                            order: props.order.id,
+                        }),
+                        form,
+                        {
+                            onError: (errors) => {
+                                message.error(errors.summary);
+                            },
                         },
-                    });
+                    );
                 },
             });
         } else {
@@ -90,33 +94,57 @@ const handleValidateButtonClick = () => {
 
 <template>
     <section>
-        <n-form :model="form" :rules="rules" ref="formRef" label-placement="top" size="medium">
+        <n-form
+            :model="form"
+            :rules="rules"
+            ref="formRef"
+            label-placement="top"
+            size="medium"
+        >
             <span v-if="product.sizes.length > 0">
                 <n-form-item label="Crust" path="crust_id">
-                    <n-radio-group v-model:value="form.crust_id" name="crust_id">
-                        <n-radio-button v-for="crust in product.crusts" :key="crust.id" :value="crust.id"
-                            :label="crust.name" />
+                    <n-radio-group
+                        v-model:value="form.crust_id"
+                        name="crust_id"
+                    >
+                        <n-radio-button
+                            v-for="crust in product.crusts"
+                            :key="crust.id"
+                            :value="crust.id"
+                            :label="crust.name"
+                        />
                     </n-radio-group>
                 </n-form-item>
             </span>
-
 
             <span v-if="product.sizes.length > 0">
                 <n-form-item label="Size" path="size_id">
                     <n-radio-group v-model:value="form.size_id" name="size_id">
-                        <n-radio-button v-for="size in product.sizes" :key="size.id" :value="size.id"
-                            :label="size.name" />
+                        <n-radio-button
+                            v-for="size in product.sizes"
+                            :key="size.id"
+                            :value="size.id"
+                            :label="size.name"
+                        />
                     </n-radio-group>
                 </n-form-item>
             </span>
 
-
             <n-form-item label="Notes" path="notes">
-                <n-input type="textarea" v-model:value="form.notes" placeholder="Notes" />
+                <n-input
+                    type="textarea"
+                    v-model:value="form.notes"
+                    placeholder="Notes"
+                />
             </n-form-item>
 
             <n-form-item>
-                <n-button type="primary" html-type="submit" @click="handleValidateButtonClick" :loading="loadingSubmit">
+                <n-button
+                    type="primary"
+                    html-type="submit"
+                    @click="handleValidateButtonClick"
+                    :loading="loadingSubmit"
+                >
                     Submit
                 </n-button>
             </n-form-item>

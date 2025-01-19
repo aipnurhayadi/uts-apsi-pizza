@@ -23,4 +23,9 @@ class ProductSize extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    public function orderDetailAdditionals()
+    {
+        return $this->morphMany(OrderDetailAdditional::class, 'order_detail_additionable');
+    }
 }

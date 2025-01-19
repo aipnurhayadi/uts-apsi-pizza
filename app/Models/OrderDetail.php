@@ -16,4 +16,19 @@ class OrderDetail extends Model
         'quantity',
         'notes',
     ];
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
+
+    public function orderDetailAdditionals()
+    {
+        return $this->hasMany(OrderDetailAdditional::class);
+    }
 }

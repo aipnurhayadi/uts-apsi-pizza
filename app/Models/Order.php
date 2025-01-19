@@ -18,4 +18,9 @@ class Order extends Model
         'order_type',
         'order_status',
     ];
+
+    public function orderDetails()
+    {
+        return $this->hasMany(OrderDetail::class);
+    }
 }

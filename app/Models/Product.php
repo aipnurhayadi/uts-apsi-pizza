@@ -20,14 +20,14 @@ class Product extends Model
         'deleted_at'
     ];
 
-    public function getIdrPriceAttribute()
+    public function getPriceAttribute($price)
     {
-        if ($this->price === null) {
+        if ($price === null) {
             return 'Rp0,00';
         }
 
         $formatter = new NumberFormatter('id_ID', NumberFormatter::CURRENCY);
-        return $formatter->formatCurrency($this->price, 'IDR');
+        return $formatter->formatCurrency($price, 'IDR');
     }
 
     /**
@@ -52,5 +52,10 @@ class Product extends Model
     public function sizes()
     {
         return $this->hasMany(ProductSize::class);
+    }
+
+    public function orderDetails()
+    {
+        return $this->hasMany(OrderDetail::class);
     }
 }

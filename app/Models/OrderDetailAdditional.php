@@ -15,4 +15,14 @@ class OrderDetailAdditional extends Model
         'order_detail_additionable_id',
         'order_detail_additionable_type',
     ];
+
+    public function orderDetail()
+    {
+        return $this->belongsTo(OrderDetail::class);
+    }
+
+    public function orderDetailAdditionable()
+    {
+        return $this->morphTo();
+    }
 }

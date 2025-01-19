@@ -94,6 +94,13 @@ const showingNavigationDropdown = ref(false);
 
                                         <template #content>
                                             <DropdownLink
+                                                :href="
+                                                    route('order.transaction')
+                                                "
+                                            >
+                                                Transactions
+                                            </DropdownLink>
+                                            <DropdownLink
                                                 :href="route('profile.edit')"
                                             >
                                                 Profile
@@ -210,8 +217,8 @@ const showingNavigationDropdown = ref(false);
                     </div>
 
                     <!-- Responsive Settings Options -->
-                    <span v-if="$page.props.auth.user"
-                        ><div class="border-t border-gray-200 pb-1 pt-4">
+                    <span v-if="$page.props.auth.user">
+                        <div class="border-t border-gray-200 pb-1 pt-4">
                             <div class="px-4">
                                 <div
                                     class="text-base font-medium text-gray-800"
@@ -225,6 +232,11 @@ const showingNavigationDropdown = ref(false);
 
                             <div class="mt-3 space-y-1">
                                 <ResponsiveNavLink
+                                    :href="route('order.transaction')"
+                                >
+                                    Transactions
+                                </ResponsiveNavLink>
+                                <ResponsiveNavLink
                                     :href="route('profile.edit')"
                                 >
                                     Profile
@@ -237,10 +249,10 @@ const showingNavigationDropdown = ref(false);
                                     Log Out
                                 </ResponsiveNavLink>
                             </div>
-                        </div></span
-                    >
-                    <span v-else
-                        ><div class="border-t border-gray-200 pb-1 pt-4">
+                        </div>
+                    </span>
+                    <span v-else>
+                        <div class="border-t border-gray-200 pb-1 pt-4">
                             <div class="px-4">Login or Sign Up</div>
 
                             <div class="mt-3 space-y-1">
@@ -258,8 +270,8 @@ const showingNavigationDropdown = ref(false);
                                     Register
                                 </ResponsiveNavLink>
                             </div>
-                        </div></span
-                    >
+                        </div>
+                    </span>
                 </div>
             </nav>
 
