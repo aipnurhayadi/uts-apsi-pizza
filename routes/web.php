@@ -36,6 +36,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/order/{order}', [OrderController::class, 'show'])->name('order.show');
         Route::get('/order/{order}/cart', [OrderController::class, 'cart'])->name('order.show.cart');
         Route::post('/order/{order}/cart', [OrderController::class, 'docart'])->name('order.show.docart');
+        Route::delete('/order/{order}/cart', [OrderController::class, 'deleteTransaction'])->name('order.show.delete');
+
         Route::get('/order/{order}/add/{product}', [OrderController::class, 'add'])->name('order.show.add');
         Route::post('/order/{order}/add/{product}', [OrderController::class, 'doadd'])->name('order.show.doadd');
     });

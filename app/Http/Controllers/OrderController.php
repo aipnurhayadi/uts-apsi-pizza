@@ -67,8 +67,8 @@ class OrderController extends Controller
             'notes' => 'nullable|string|max:255',
         ]);
 
-        $crust_id = $validated['crust_id'] ?? null;
-        $size_id = $validated['size_id'] ?? null;
+        $crust_id = $request->input('crust_id') ?? null;
+        $size_id = $request->input('size_id') ?? null;
         $notes = $validated['notes'] ?? '';
 
         try {
@@ -152,5 +152,15 @@ class OrderController extends Controller
             ->orderBy('id', 'desc')->get();
 
         return Inertia::render('Order/Transaction', ['orders' => $orders]);
+    }
+
+    public function deleteTransaction(Request $request, Order $order)
+    {
+        try {
+            $order->delete();
+            return Redirect::route('order.transaction')->with('success', 'Transaction has been deleted successfully.');
+        } catch (Exception $e) {
+            return redirect()->back()->withErrors(['summary' => $e->getMessage()]);
+        }
     }
 }

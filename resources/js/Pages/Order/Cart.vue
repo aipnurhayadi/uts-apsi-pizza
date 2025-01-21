@@ -76,6 +76,7 @@ const handleValidateButtonClick = () => {
 };
 </script>
 <template>
+
     <Head title="Cart" />
     <CommonLayout>
         <template #header>
@@ -85,81 +86,48 @@ const handleValidateButtonClick = () => {
         </template>
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <div
-                    class="overflow-hidden bg-white p-5 shadow-sm sm:rounded-lg"
-                >
+                <div class="overflow-hidden bg-white p-5 shadow-sm sm:rounded-lg">
                     <n-grid cols="4" item-responsive responsive="screen">
                         <n-grid-item span="4 m:1 l:1">
                             <div class="p-5">
                                 <n-form>
                                     <n-form-item label="Order Type">
-                                        <n-input
-                                            :value="order.order_type"
-                                            disabled
-                                        />
+                                        <n-input :value="order.order_type" disabled />
                                     </n-form-item>
                                     <n-form-item label="Delivery Schedule">
-                                        <n-input
-                                            :value="address.delivery_time.name"
-                                            disabled
-                                        />
+                                        <n-input :value="address.delivery_time.name" disabled />
                                     </n-form-item>
                                     <n-form-item label="Outlet">
-                                        <n-input
-                                            :value="address.outlet.name"
-                                            disabled
-                                        />
+                                        <n-input :value="address.outlet.name" disabled />
                                     </n-form-item>
                                     <n-form-item label="Delivery Address">
-                                        <n-input
-                                            :value="address.description"
-                                            disabled
-                                        />
+                                        <n-input :value="address.description" disabled />
                                     </n-form-item>
                                 </n-form>
                             </div>
                         </n-grid-item>
                         <n-grid-item span="4 m:3 l:3">
                             <div class="p-5">
-                                <n-form
-                                    :model="form"
-                                    :rules="rules"
-                                    ref="formRef"
-                                    label-placement="top"
-                                    size="medium"
-                                >
-                                    <n-form-item
-                                        label="Payment Method"
-                                        path="payment_method_id"
-                                    >
-                                        <n-select
-                                            v-model:value="
-                                                form.payment_method_id
-                                            "
-                                            placeholder="Select a payment method"
-                                            :options="
-                                                paymentMethods.map(
-                                                    (payment) => ({
-                                                        label: payment.name,
-                                                        value: payment.id,
-                                                    }),
-                                                )
-                                            "
-                                        />
+                                <n-form :model="form" :rules="rules" ref="formRef" label-placement="top" size="medium">
+                                    <n-form-item label="Payment Method" path="payment_method_id">
+                                        <n-select v-model:value="form.payment_method_id
+                                            " placeholder="Select a payment method" :options="paymentMethods.map(
+                                                (payment) => ({
+                                                    label: payment.name,
+                                                    value: payment.id,
+                                                }),
+                                            )
+                                                " />
                                     </n-form-item>
 
                                     <order-detail :order="order" />
 
-                                    <n-form-item>
-                                        <n-button
-                                            type="primary"
-                                            html-type="submit"
-                                            @click="handleValidateButtonClick"
-                                            :loading="loadingSubmit"
-                                        >
+                                    <div class="text-center mt-4">
+                                        <n-button round secondary type="primary" html-type="submit"
+                                            @click="handleValidateButtonClick" :loading="loadingSubmit">
                                             Checkout
                                         </n-button>
-                                    </n-form-item>
+                                    </div>
                                 </n-form>
                             </div>
                         </n-grid-item>
